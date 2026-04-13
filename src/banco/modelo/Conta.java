@@ -8,51 +8,55 @@ public abstract class Conta {
         this.saldo = saldoInicial;
     }
     public double getSaldo (){
-        return "saldo";
+        return saldo;
     }
 
     public String getTitular() {
-        return "titular";
+        return titular;
     }
 
     public String consultaSaldo (){
-        return "O saldo é: " + "saldo";
+        return "O saldo é: " + saldo;
     }
 
-    public String realizaSaque(double "valor") {
-        if (valor > 0) {
-            if (valor<=saldo) {
-                saldo -= valor;
-                return "Saque realizado com sucesso. O novo saldo é: " + saldo;
-            } else {
+    public String realizaSaque (double valor) {
+            if (valor <= 0) {
+                return "O valor deve ser maior que 0.";
+            }
+
+            if (valor > saldo) {
                 return "Seu saldo é insuficiente.";
-            }}
-        else {
-            return "O valor não pode ser negativo.";
+            }
+
+            saldo -= valor;
+            return "Saque realizado com sucesso. O novo saldo é: " + saldo;
         }
-    }
 
     public String realizaDeposito(double valor) {
         if (valor > 0) {
-            saldo += valor;
-            return "Valor depositado com sucesso. O novo saldo é: " + saldo;
-        } else {
-            return "O valor não pode ser negativo.";
+            return "O valor deve ser maior que zero.";
         }
+
+        saldo += valor;
+        return "Valor depositado com sucesso. O novo saldo é: " + saldo;
     }
 
-    public String realizaTransferencia(double valor) {
-        if (valor > 0) {
-            if (valor <=saldo){
-                saldo -= valor;
-                return "Valor transferido com sucesso. O novo saldo é: " + saldo;
-            } else {
-                return "Saldo insuficiente.";
-            }
-        }
-        else {
-            return "O valor não pode ser negativo.";
+    public String realizaTransferencia(double valor, Conta destino) {
+        if (destino == null) {
+            return "Conta de destino inválida.";
         }
 
+        if (valor > 0) {
+            return "O valor deve ser maior que zero.";
+        }
+
+        if (valor > saldo) {
+            return "Saldo insuficiente.";
+        }
+
+        saldo -= valor;
+        destino.saldo += valor;
+
+        return "Transferência realizada com sucesso. O novo saldo é: " + saldo;
     }
 }
